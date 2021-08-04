@@ -1,20 +1,22 @@
 import {
+	exit,
 	init,
 	INPUT,
 	LOW,
 	mode,
 	msleep,
 	OUTPUT,
+	read,
 	spiBegin,
 	spiChipSelect,
+	spiEnd,
 	spiSetClockDivider,
 	spiSetCSPolarity,
 	spiSetDataMode,
 	spiWrite,
 	write,
-	read,
 } from "rpio";
-import { initialize, Pin } from "./low";
+import { finalize, initialize, Pin } from "./low";
 
 jest.mock("rpio");
 
@@ -210,6 +212,30 @@ describe("low level functions", () => {
 				":af,2",
 				"CS1",
 			]);
+		});
+	});
+
+	describe("finalize", () => {
+		it("writes commands to put the device to sleep and low power mode", () => {
+			finalize();
+			expect(commands).toEqual([
+				"DC0", //
+				"CS0",
+				":10",
+				"CS1",
+				"CS0",
+				"DC1",
+				":1",
+				"CS1",
+
+				"~2000",
+
+				"CS0",
+				"DC0",
+				"RST0",
+			]);
+			expect(spiEnd).toHaveBeenCalledTimes(1);
+			expect(exit).toHaveBeenCalledTimes(1);
 		});
 	});
 });

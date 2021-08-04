@@ -1,4 +1,5 @@
 import {
+	exit,
 	init,
 	INPUT,
 	LOW,
@@ -8,6 +9,7 @@ import {
 	read,
 	spiBegin,
 	spiChipSelect,
+	spiEnd,
 	spiSetClockDivider,
 	spiSetCSPolarity,
 	spiSetDataMode,
@@ -72,6 +74,24 @@ export function initialize(): void {
 	data(0x00, 0x00);
 	command(0x4f);
 	data(0xaf, 0x02);
+}
+
+export function finalize(): void {
+	deviceSleep();
+
+	msleep(2000);
+
+	write(Pin.CS, LOW);
+	write(Pin.DC, LOW);
+	write(Pin.RST, LOW);
+
+	spiEnd();
+	exit();
+}
+
+function deviceSleep() {
+	command(0x10);
+	data(0x01);
 }
 
 function reset(): void {

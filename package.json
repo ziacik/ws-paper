@@ -30,6 +30,7 @@
 		"esbuild-node:watch": "esbuild src/cli.ts --bundle --watch --sourcemap=external --outfile=dist/esbuild/cli.js"
 	},
 	"devDependencies": {
+		"@types/get-pixels": "^3.3.1",
 		"@types/jest": "^26.0.21",
 		"@types/node": "^15.0.1",
 		"@types/rpio": "^2.4.1",
@@ -47,6 +48,9 @@
 		"typescript": "^4.2.3"
 	},
 	"dependencies": {
-		"rpio": "^2.4.2"
+		"get-pixels": "^3.3.3",
+		"image-pixels": "^2.2.2",
+		"rpio": "^2.4.2",
+		"svg-render": "^1.2.0"
 	}
 }

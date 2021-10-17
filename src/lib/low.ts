@@ -89,6 +89,10 @@ export function finalize(): void {
 	exit();
 }
 
+export function draw(_blackBytes: number[], _redBytes: number[]): void {
+	// TODO
+}
+
 function deviceSleep() {
 	command(0x10);
 	data(0x01);

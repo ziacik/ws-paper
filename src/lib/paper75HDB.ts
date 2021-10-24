@@ -16,16 +16,10 @@ import {
 	spiWrite,
 	write,
 } from "rpio";
-import { Device, Pixel, PixelSize } from "./device";
+import { Device, Pixel8, PixelSize } from "./device";
+import { Pin } from "./pin";
 
-export enum Pin {
-	RST = 17,
-	DC = 25,
-	CS = 8,
-	BUSY = 24,
-}
-
-export class LowCommunicator implements Device {
+export class Paper75HDB implements Device {
 	readonly width: PixelSize = 880;
 	readonly height: PixelSize = 528;
 
@@ -94,15 +88,7 @@ export class LowCommunicator implements Device {
 		exit();
 	}
 
-	displayOn(): void {
-		this.command(0x22);
-		this.data(0xc7); //Load LUT from MCU(0x32)
-		this.command(0x20);
-		msleep(200); //!!!The rpio.msleep here is necessary, 200uS at least!!!
-		this.waitUntilIdle();
-	}
-
-	draw(blackPixels: Pixel[], redPixels: Pixel[]): void {
+	draw(blackPixels: Pixel8[], redPixels: Pixel8[]): void {
 		this.command(0x4f);
 		this.data(0xaf, 0x02);
 
@@ -111,6 +97,16 @@ export class LowCommunicator implements Device {
 
 		this.command(0x26);
 		this.data(...redPixels);
+
+		this.displayOn();
+	}
+
+	private displayOn(): void {
+		this.command(0x22);
+		this.data(0xc7); // Load LUT from MCU(0x32)
+		this.command(0x20);
+		msleep(200); // !!!The rpio.msleep here is necessary, 200uS at least!!!
+		this.waitUntilIdle();
 	}
 
 	private deviceSleep() {

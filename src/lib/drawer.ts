@@ -10,7 +10,6 @@ export class Drawer {
 		const blackPixels = Array(length).fill(0xff);
 		const redPixels = Array(length).fill(0);
 		this.device.draw(blackPixels, redPixels);
-		this.device.displayOn();
 	}
 
 	async drawSvg(svg: string): Promise<void> {
@@ -25,7 +24,7 @@ export class Drawer {
 		const blackBytes = [];
 		const redBytes = [];
 
-		let offset = 1;
+		let offset = 128;
 		let blackByte = 0;
 		let redByte = 0;
 
@@ -34,21 +33,20 @@ export class Drawer {
 			const isBlack = r === 0 && g === 0 && b === 0 && a === 255;
 			const isRed = r === 255 && g === 0 && b === 0 && a === 255;
 
-			blackByte += isBlack ? offset : 0;
-			redByte += isRed ? offset : 0;
+			blackByte += isBlack ? 0 : offset;
+			redByte += isRed ? 0 : offset;
 
-			offset *= 2;
+			offset = offset >> 1;
 
-			if (offset === 256) {
+			if (offset === 0) {
 				blackBytes.push(blackByte);
-				redBytes.push(redByte);
+				redBytes.push(redByte ^ 0xff);
 				blackByte = 0;
 				redByte = 0;
-				offset = 1;
+				offset = 128;
 			}
 		}
 
 		this.device.draw(blackBytes, redBytes);
-		this.device.displayOn();
 	}
 }

@@ -12,7 +12,6 @@ describe("Drawer", () => {
 			initialize: jest.fn(),
 			finalize: jest.fn(),
 			draw: jest.fn(),
-			displayOn: jest.fn(),
 		};
 		drawer = new Drawer(device);
 	});
@@ -22,37 +21,27 @@ describe("Drawer", () => {
 			await drawer.clear();
 			expect(device.draw).toHaveBeenCalledWith([0xff, 0xff, 0xff, 0xff], [0, 0, 0, 0]);
 		});
-
-		it("turns the display on", async () => {
-			await drawer.clear();
-			expect(device.displayOn).toHaveBeenCalled();
-		});
 	});
 
 	describe("drawSvg", () => {
 		it("can render and write basic black & white image", async () => {
 			await drawer.drawSvg(`<svg width="16" height="2"><rect width="50%" height="50%" /></svg>`);
-			expect(device.draw).toHaveBeenCalledWith([0xff, 0, 0, 0], [0, 0, 0, 0]);
+			expect(device.draw).toHaveBeenCalledWith([0, 0xff, 0xff, 0xff], [0, 0, 0, 0]);
 		});
 
 		it("can render and write basic red & white image", async () => {
 			await drawer.drawSvg(`<svg width="16" height="2"><rect width="50%" height="50%" fill="red" /></svg>`);
-			expect(device.draw).toHaveBeenCalledWith([0, 0, 0, 0], [0xff, 0, 0, 0]);
+			expect(device.draw).toHaveBeenCalledWith([0xff, 0xff, 0xff, 0xff], [0xff, 0, 0, 0]);
 		});
 
 		it("can render and write basic red & black & white image", async () => {
 			await drawer.drawSvg(
 				`<svg width="16" height="2">
-					<rect width="50%" height="50%" fill="red" />
-					<rect x="50%" y="50%" width="50%" height="50%" fill="black" />
+					<rect width="75%" height="50%" fill="red" />
+					<rect x="25%" y="50%" width="75%" height="50%" fill="black" />
 				</svg>`
 			);
-			expect(device.draw).toHaveBeenCalledWith([0, 0, 0, 0xff], [0xff, 0, 0, 0]);
-		});
-
-		it("turns the display on", async () => {
-			await drawer.drawSvg(`<svg width="16" height="2"><rect width="50%" height="50%" /></svg>`);
-			expect(device.displayOn).toHaveBeenCalled();
+			expect(device.draw).toHaveBeenCalledWith([0xff, 0xff, 0xf0, 0], [0xff, 0xf0, 0, 0]);
 		});
 	});
 });

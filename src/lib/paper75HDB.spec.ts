@@ -17,18 +17,19 @@ import {
 	write,
 } from "rpio";
 import { Device } from "./device";
-import { LowCommunicator, Pin } from "./low";
+import { Paper75HDB } from "./paper75HDB";
+import { Pin } from "./pin";
 
 jest.mock("rpio");
 
-describe("LowCommunicator", () => {
+describe("Paper 7.5 Inch HD (B)", () => {
 	let device: Device;
 	let initOptions: Record<string, unknown>;
 	let modes: Record<Pin, number>;
 	let commands: string[];
 
 	beforeEach(() => {
-		device = new LowCommunicator();
+		device = new Paper75HDB();
 		modes = {} as Record<Pin, number>;
 		initOptions = {};
 		commands = [];
@@ -274,15 +275,7 @@ describe("LowCommunicator", () => {
 				"DC1",
 				":f0,f1,f2,f3",
 				"CS1",
-			]);
-		});
-	});
 
-	describe("displayOn", () => {
-		it("writes commands to turn display on", () => {
-			device.displayOn();
-
-			expect(commands).toEqual([
 				"DC0", //
 				"CS0",
 				":22",

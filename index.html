@@ -58,11 +58,44 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<a href="#ws-paper" id="ws-paper" style="color: inherit; text-decoration: none;">
-					<h1>ws-paper</h1>
+				<a href="#waveshare-paper" id="waveshare-paper" style="color: inherit; text-decoration: none;">
+					<h1>Waveshare Paper</h1>
 				</a>
-				<p>This is programmed according to original e-Paper EPD demo</p>
-				<p><a href="https://github.com/waveshare/e-Paper/blob/04d4621789dd6832222e1c7be8f04f93f51df331/RaspberryPi_JetsonNano/c/examples/EPD_7in5b_HD_test.c">https://github.com/waveshare/e-Paper/blob/04d4621789dd6832222e1c7be8f04f93f51df331/RaspberryPi_JetsonNano/c/examples/EPD_7in5b_HD_test.c</a></p>
+				<p>High-level javascript library and CLI for drawing on a Waveshare e-Paper using Raspberry PI GPIO.</p>
+				<p>Currently, only a single device support is implemented, EPD 7.5inch HD (B).</p>
+				<p>The source is inspired by <a href="https://github.com/waveshare/e-Paper/blob/04d4621789dd6832222e1c7be8f04f93f51df331/RaspberryPi_JetsonNano/c/examples/EPD_7in5b_HD_test.c">original waveshare example code</a>.</p>
+				<a href="#prerequisites" id="prerequisites" style="color: inherit; text-decoration: none;">
+					<h2>Prerequisites</h2>
+				</a>
+				<p>Because the library uses <em>SPI</em> to write data to the device, <em>SPI</em> access need to be enabled on Raspberry.</p>
+				<p>To do that, run</p>
+				<p><code>sudo raspi-config</code></p>
+				<p>Then select <em>Interface Options</em>, and enable <em>SPI</em>.</p>
+				<a href="#usage-as-a-library" id="usage-as-a-library" style="color: inherit; text-decoration: none;">
+					<h2>Usage as a library</h2>
+				</a>
+				<p>Install <code>npm i ws-paper</code>.</p>
+				<p>Import a specific implementation of <code>Device</code>, and a high-level class for drawing, <code>Drawer</code>.</p>
+				<p>Initialize the device, draw whatever you need to, and don&#39;t forget to finalize the device at the end, even in case of error.</p>
+				<p>Example:</p>
+				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Drawer</span><span style="color: #000000">, </span><span style="color: #001080">Paper75HDB</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;ws-paper&quot;</span><span style="color: #000000">;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">device</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Paper75HDB</span><span style="color: #000000">();</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">drawer</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Drawer</span><span style="color: #000000">(</span><span style="color: #001080">device</span><span style="color: #000000">);</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">svg</span><span style="color: #000000"> = </span><span style="color: #A31515">`&lt;svg width=&quot;</span><span style="color: #0000FF">${</span><span style="color: #001080">device</span><span style="color: #000000FF">.</span><span style="color: #001080">width</span><span style="color: #0000FF">}</span><span style="color: #A31515">&quot; height=&quot;</span><span style="color: #0000FF">${</span><span style="color: #001080">device</span><span style="color: #000000FF">.</span><span style="color: #001080">height</span><span style="color: #0000FF">}</span><span style="color: #A31515">&quot;&gt;&lt;text font-size=&quot;50&quot; x=&quot;50%&quot; y=&quot;20%&quot; text-anchor=&quot;middle&quot;&gt;Hello, world!&lt;/text&gt;&lt;/svg&gt;`</span><span style="color: #000000">;</span>
+
+<span style="color: #001080">device</span><span style="color: #000000">.</span><span style="color: #795E26">initialize</span><span style="color: #000000">();</span>
+<span style="color: #001080">drawer</span><span style="color: #000000">.</span><span style="color: #795E26">drawSvg</span><span style="color: #000000">(</span><span style="color: #001080">svg</span><span style="color: #000000">).</span><span style="color: #795E26">finally</span><span style="color: #000000">(() </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">device</span><span style="color: #000000">.</span><span style="color: #795E26">finalize</span><span style="color: #000000">());</span>
+</code></pre>
+				<a href="#usage-as-a-cli" id="usage-as-a-cli" style="color: inherit; text-decoration: none;">
+					<h2>Usage as a CLI</h2>
+				</a>
+				<p>Install globally <code>npm i -g ws-paper</code>.</p>
+				<p>Run <code>ws-paper --help</code> to get list of available commands.</p>
+				<p>Example:</p>
+				<p><code>sudo ws-paper draw &quot;&lt;svg width=&#39;880&#39; height=&#39;${device.height}&#39;&gt;&lt;text font-size=&#39;50&#39; x=&#39;50%&#39; y=&#39;20%&#39; text-anchor=&#39;middle&#39;&gt;Hello, world!&lt;/text&gt;&lt;/svg&gt;&quot;</code></p>
+				<p>Please note, <code>sudo</code> is needed because <code>rpio</code> needs access to <code>/dev/mem</code> which is not allowed for non-root users.</p>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">

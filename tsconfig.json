@@ -1,7 +1,7 @@
 {
 	"compilerOptions": {
 		"target": "es6",
-		"module": "commonjs",
+		"module": "es6",
 		"moduleResolution": "node",
 		"declaration": true,
 		"strict": true,
@@ -18,10 +18,10 @@
 		"allowSyntheticDefaultImports": true,
 		"experimentalDecorators": true,
 		"sourceMap": true,
-		"outDir": "./dist/tsc/",
+		"outDir": "./dist/",
 		"types": ["node", "jest"],
 		"lib": ["ES6", "DOM"]
 	},
 	"include": ["src/**/*.ts"],
-	"exclude": ["node_modules", "**/*.test.ts"]
+	"exclude": ["node_modules"]
 }

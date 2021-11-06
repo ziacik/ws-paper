@@ -2,7 +2,7 @@
 
 High-level javascript library and CLI for drawing on a Waveshare e-Paper using Raspberry PI GPIO.
 
-Currently, only a single device support is implemented, EPD 7.5inch HD (B).
+Currently, only a single device support is implemented, [EPD 7.5inch HD (B)](https://www.waveshare.com/wiki/7.5inch_HD_e-Paper_HAT_(B)).
 
 The source is inspired by [original waveshare example code](https://github.com/waveshare/e-Paper/blob/04d4621789dd6832222e1c7be8f04f93f51df331/RaspberryPi_JetsonNano/c/examples/EPD_7in5b_HD_test.c).
 

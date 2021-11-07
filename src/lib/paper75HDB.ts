@@ -109,7 +109,7 @@ export class Paper75HDB implements Device {
 		this.waitUntilIdle();
 	}
 
-	private deviceSleep() {
+	private deviceSleep(): void {
 		this.command(0x10);
 		this.data(0x01);
 	}
@@ -123,21 +123,21 @@ export class Paper75HDB implements Device {
 		msleep(200);
 	}
 
-	private command(id: number) {
+	private command(id: number): void {
 		write(Pin.DC, 0);
 		write(Pin.CS, 0);
 		spiWrite(Buffer.alloc(1, id), 1);
 		write(Pin.CS, 1);
 	}
 
-	private data(...data: number[]) {
+	private data(...data: number[]): void {
 		write(Pin.CS, 0);
 		write(Pin.DC, 1);
 		spiWrite(Buffer.from(data), data.length);
 		write(Pin.CS, 1);
 	}
 
-	private waitUntilIdle() {
+	private waitUntilIdle(): void {
 		while (read(Pin.BUSY)) {
 			msleep(10);
 		}

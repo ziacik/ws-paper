@@ -8,4 +8,8 @@ module.exports = {
 		"plugin:@typescript-eslint/recommended",
 		"plugin:prettier/recommended",
 	],
+	rules: {
+		"@typescript-eslint/explicit-function-return-type": "error",
+		"@typescript-eslint/no-explicit-any": "error",
+	},
 };

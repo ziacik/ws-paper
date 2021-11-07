@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.2] - 2021-11-07
+
+### Fixed
+
+- Yet another fix to publish workflow
+
 ## [1.0.1] - 2021-11-07
 
 ### Fixed
@@ -22,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - First version of the CLI
 - EPD 7.5inch HD (B) basic device implementation
 
-[unreleased]: https://github.com/ziacik/ws-paper/compare/v1.0.1...HEAD
+[unreleased]: https://github.com/ziacik/ws-paper/compare/v1.0.2...HEAD
+[1.0.2]: https://github.com/ziacik/ws-paper/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/ziacik/ws-paper/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/ziacik/ws-paper/releases/tag/v1.0.0

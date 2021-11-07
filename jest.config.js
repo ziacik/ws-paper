@@ -6,4 +6,5 @@ module.exports = {
 	},
 	resetMocks: true,
 	clearMocks: true,
+	setupFilesAfterEnv: ["jest-extended/all"],
 };

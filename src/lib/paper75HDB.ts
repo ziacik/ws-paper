@@ -19,6 +19,9 @@ import {
 import { Device, Pixel8, PixelSize } from "./device";
 import { Pin } from "./pin";
 
+/**
+ * A 7.5inch HD (B) device implementation.
+ */
 export class Paper75HDB implements Device {
 	readonly width: PixelSize = 880;
 	readonly height: PixelSize = 528;

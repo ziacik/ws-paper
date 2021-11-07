@@ -2,9 +2,19 @@ import pixels from "image-pixels";
 import render from "svg-render";
 import { Device } from "./device";
 
+/**
+ * Class for high-level drawing on a device.
+ */
 export class Drawer {
+	/**
+	 * Creates a Drawer instance.
+	 * @param device specific device implementation to be used as an underlying hardware for drawing to
+	 */
 	constructor(private readonly device: Device) {}
 
+	/**
+	 * Clears the device.
+	 */
 	async clear(): Promise<void> {
 		const length = (this.device.width * this.device.height) / 8; // TODO handle fractions
 		const blackPixels = Array(length).fill(0xff);
@@ -12,6 +22,10 @@ export class Drawer {
 		this.device.draw(blackPixels, redPixels);
 	}
 
+	/**
+	 * Draws a svg image on the device.
+	 * @param svg A svg which is to be drawed to the device. The size of svg's viewport should match the device size. If bigger, it will be clipped.
+	 */
 	async drawSvg(svg: string): Promise<void> {
 		const outputBuffer = await render({
 			buffer: Buffer.from(svg, "utf-8"),

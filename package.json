@@ -1,6 +1,6 @@
 {
 	"name": "ws-paper",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "Waveshare e-Paper high-level display library and CLI",
 	"author": "František Žiačik <ziacik@gmail.com>",
 	"repository": "",

@@ -24,7 +24,7 @@ export class Drawer {
 
 	/**
 	 * Draws a svg image on the device.
-	 * @param svg A svg which is to be drawed to the device. The size of svg's viewport should match the device size. If bigger, it will be clipped.
+	 * @param svg A svg which is to be drawed to the device.
 	 */
 	async drawSvg(svg: string): Promise<void> {
 		const outputBuffer = await render({
